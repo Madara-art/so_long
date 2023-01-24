@@ -6,7 +6,7 @@
 /*   By: hbouabda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 23:15:00 by hbouabda          #+#    #+#             */
-/*   Updated: 2023/01/23 21:46:16 by hbouabda         ###   ########.fr       */
+/*   Updated: 2023/01/24 01:08:43 by hbouabda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,80 +82,33 @@ void	map_init(t_mlx *vars)
 												&vars->simg.height);
 }
 
+void	help_key_hook(t_mlx *vars, int x, int y)
+{
+	if (vars->map[x][y] != '1' && (vars->map[x][y] != 'E' || !vars->tab_el[2]))
+	{
+		if (vars->map[x][y] == 'C')
+			vars->tab_el[2]--;
+		if (vars->map[x][y] == 'E')
+			exit_fun1(vars);
+		vars->map[vars->p_x][vars->p_y] = '0';
+		vars->map[x][y] = 'P';
+	}
+}
+
 int	key_hook(int keycode, t_mlx *vars)
 {
 	printf("this key is: %d\n", keycode);
 	if (keycode == 53)
 		exit_fun_er(vars);
-	if (keycode == 125)
-	{
-		player_pos(vars);
-		if (vars->map[vars->p_x + 1][vars->p_y] != '1' && (vars->map[vars->p_x
-				+ 1][vars->p_y] != 'E' || !vars->tab_el[2]))
-		{
-			if (vars->map[vars->p_x + 1][vars->p_y] == 'C')
-				vars->tab_el[2]--;
-			if (vars->map[vars->p_x + 1][vars->p_y] == 'E')
-				exit_fun1(vars);
-			vars->map[vars->p_x][vars->p_y] = '0';
-			vars->map[vars->p_x + 1][vars->p_y] = 'P';
-		}
-	}
-	if (keycode == 123)
-	{
-		player_pos(vars);
-		if (vars->map[vars->p_x][vars->p_y - 1] != '1'
-			&& (vars->map[vars->p_x][vars->p_y - 1] != 'E' || !vars->tab_el[2]))
-		{
-			if (vars->map[vars->p_x][vars->p_y - 1] == 'C')
-				vars->tab_el[2]--;
-			if (vars->map[vars->p_x][vars->p_y - 1] == 'E')
-				exit_fun1(vars);
-			vars->map[vars->p_x][vars->p_y] = '0';
-			vars->map[vars->p_x][vars->p_y - 1] = 'P';
-		}
-	}
-	if (keycode == 124)
-	{
-		player_pos(vars);
-		if (vars->map[vars->p_x][vars->p_y + 1] != '1'
-			&& (vars->map[vars->p_x][vars->p_y + 1] != 'E' || !vars->tab_el[2]))
-		{
-			if (vars->map[vars->p_x][vars->p_y + 1] == 'C')
-				vars->tab_el[2]--;
-			if (vars->map[vars->p_x][vars->p_y + 1] == 'E')
-				exit_fun1(vars);
-			vars->map[vars->p_x][vars->p_y] = '0';
-			vars->map[vars->p_x][vars->p_y + 1] = 'P';
-		}
-	}
-	if (keycode == 126)
-	{
-		player_pos(vars);
-		if (vars->map[vars->p_x - 1][vars->p_y] != '1' && (vars->map[vars->p_x
-				- 1][vars->p_y] != 'E' || !vars->tab_el[2]))
-		{
-			if (vars->map[vars->p_x - 1][vars->p_y] == 'C')
-				vars->tab_el[2]--;
-			if (vars->map[vars->p_x - 1][vars->p_y] == 'E')
-				exit_fun1(vars);
-			vars->map[vars->p_x][vars->p_y] = '0';
-			vars->map[vars->p_x - 1][vars->p_y] = 'P';
-		}
-	}
+	player_pos(vars);
+	if (keycode == 1)
+		help_key_hook(vars, vars->p_x + 1, vars->p_y);
+	if (keycode == 0)
+		help_key_hook(vars, vars->p_x, vars->p_y - 1);
+	if (keycode == 2)
+		help_key_hook(vars, vars->p_x, vars->p_y + 1);
+	if (keycode == 13)
+		help_key_hook(vars, vars->p_x - 1, vars->p_y);
 	aff_map(vars);
 	return (0);
-}
-
-void	exit_fun1(t_mlx *vars)
-{
-	int	i;
-
-	i = 0;
-	while (vars->map[i])
-		free(vars->map[i++]);
-	free(vars->map);
-	free(vars->tab_el);
-	write(1, "You won!", 8);
-	exit(0);
 }

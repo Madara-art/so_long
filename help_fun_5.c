@@ -6,7 +6,7 @@
 /*   By: hbouabda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 21:30:40 by hbouabda          #+#    #+#             */
-/*   Updated: 2023/01/23 21:49:36 by hbouabda         ###   ########.fr       */
+/*   Updated: 2023/01/24 01:08:48 by hbouabda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,17 @@ int	exit_fun_er(t_mlx *vars)
 	write(1, "Good bye!", 9);
 	exit(1);
 	return (1);
+}
+
+void	exit_fun1(t_mlx *vars)
+{
+	int i;
+
+	i = 0;
+	while (vars->map[i])
+		free(vars->map[i++]);
+	free(vars->map);
+	free(vars->tab_el);
+	write(1, "You won!", 8);
+	exit(0);
 }
