@@ -6,7 +6,7 @@
 /*   By: hbouabda <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/22 23:15:00 by hbouabda          #+#    #+#             */
-/*   Updated: 2023/01/24 01:08:43 by hbouabda         ###   ########.fr       */
+/*   Updated: 2023/01/24 01:25:50 by hbouabda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void	help_key_hook(t_mlx *vars, int x, int y)
 
 int	key_hook(int keycode, t_mlx *vars)
 {
-	printf("this key is: %d\n", keycode);
 	if (keycode == 53)
 		exit_fun_er(vars);
 	player_pos(vars);
